@@ -3,13 +3,17 @@ global using Infrastructure.Data;
 global using Microsoft.EntityFrameworkCore;
 using Core.Interfaces;
 using Infrastructure.Data.SeedData;
+using API.Helper;
+using AutoMapper;
 //using Microsoft.EntityFrameworkCore.UseSqlServer;
 var builder = WebApplication.CreateBuilder(args);
 var host = WebApplication.Create(args);
 // Add services to the container..
 //private readonly IConfiguration _config;
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddDbContext<StoreContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -51,7 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();
