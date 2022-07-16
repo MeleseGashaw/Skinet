@@ -28,8 +28,18 @@ internal class Program
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
         });
+        
 builder.Services.AddApplicationServices();
       builder.Services.AddSwaggerDocumentation(); 
+      builder.Services.AddCors(opt=>
+      {
+          opt.AddPolicy("CrosPolicy",policy=>
+          {
+              policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")
+          });
+      }
+
+      );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
         
@@ -68,6 +78,7 @@ builder.Services.AddEndpointsApiExplorer();
         app.UseStatusCodePagesWithReExecute("/errors/{0}");
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+        app.UseCors("CrosPolicy");
         app.UseAuthorization();
 
         app.MapControllers();
