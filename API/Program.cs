@@ -11,6 +11,7 @@ using API.Errors;
 using System.Linq;
 using AutoMapper;
 
+
 internal class Program
 {
     private static async Task Main(string[] args)
@@ -31,11 +32,12 @@ internal class Program
         
 builder.Services.AddApplicationServices();
       builder.Services.AddSwaggerDocumentation(); 
+      builder.Services.AddSwaggerGen();
       builder.Services.AddCors(opt=>
       {
           opt.AddPolicy("CrosPolicy",policy=>
           {
-              policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200")
+              policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200/"); 
           });
       }
 
@@ -74,6 +76,8 @@ builder.Services.AddEndpointsApiExplorer();
         {
             
         }*/
+        app.UseSwagger();
+         app.UseSwaggerUI();
        app.UseSwaggerDocumentation();
         app.UseStatusCodePagesWithReExecute("/errors/{0}");
         app.UseHttpsRedirection();
