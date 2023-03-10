@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.Errors;
 using System.Linq;
 using AutoMapper;
-
+using StackExchange.Redis;
 
 internal class Program
 {
@@ -29,7 +29,11 @@ internal class Program
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
         });
-        
+        builder.Services.AddSingleton<IConnectionMultiplexer>(c=>{
+            var configration=ConfigurationOptions.Parse(builder.Configuration.
+            GetConnectionString("Redis"),true);
+            return ConnectionMultiplexer.Connect(configration);
+        }) ;
 builder.Services.AddApplicationServices();
       builder.Services.AddSwaggerDocumentation(); 
       builder.Services.AddSwaggerGen();
