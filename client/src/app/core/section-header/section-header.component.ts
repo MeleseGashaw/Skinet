@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-section-header',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./section-header.component.scss']
 })
 export class SectionHeaderComponent implements OnInit {
-
-  constructor() { }
+    title=Title.name;
+  constructor() { 
+  
+  }
 
   ngOnInit(): void {
   }

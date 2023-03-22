@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +11,7 @@ export class ServerErrorComponent implements OnInit {
 error: any
   constructor(private router:Router) { 
     const navigation =this.router.getCurrentNavigation();
-  this.error= navigation && navigation.extras && navigation.extras.state && navigation.extras.state['error'];
+  this.error= navigation && navigation,Title && navigation.extras.state && navigation.extras.state['error'];
   }
 
   ngOnInit(): void {

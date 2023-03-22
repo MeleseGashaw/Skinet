@@ -29,7 +29,7 @@ internal class Program
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
         });
-        builder.Services.AddSingleton<IConnectionMultiplexer>(c=>{
+       builder.Services.AddSingleton<IConnectionMultiplexer>(c=>{
             var configration=ConfigurationOptions.Parse(builder.Configuration.
             GetConnectionString("Redis"),true);
             return ConnectionMultiplexer.Connect(configration);
