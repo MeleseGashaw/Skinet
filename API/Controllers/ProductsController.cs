@@ -7,6 +7,7 @@ using AutoMapper;
 using API.Errors;
 using Microsoft.AspNetCore.Http ;
 using API.Helper;
+using Microsoft.Data.SqlClient;
 
 namespace API.Controllers
 {
@@ -40,7 +41,19 @@ namespace API.Controllers
                     [HttpGet]
         public  async Task<ActionResult<Pagination<ProductToReturnDto>>> 
         GetProducts([FromQuery]ProductSpecParams productParams )
-            {
+            {using (var connection = new SqlConnection("DefaultConnection"))
+{
+    try
+    {
+        connection.Open();
+        Console.WriteLine("Connection successful!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Connection failed: {ex.Message}");
+    }
+}
+
                 var spec =new ProductsWithTypeAndBrandsSpecification(productParams);
                 var countSpec=new ProductWithFilterForCountSpecification(productParams);
                 var totalItems=await _productsRepo.CountAsync(countSpec);
