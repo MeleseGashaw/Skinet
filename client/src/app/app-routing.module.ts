@@ -6,6 +6,7 @@ import { TestErrorComponent } from './core/test-error/test-error.component';
 import { HomeComponent } from './home/home.component';
 import { PrductDetailsComponent } from './shop/prduct-details/prduct-details.component';
 import { ShopComponent } from './shop/shop.component';
+import { skip } from 'rxjs';
 
 const routes: Routes = [
   {path:'',component:HomeComponent, data: {breadcrumb:'Home'}},
@@ -17,6 +18,8 @@ const routes: Routes = [
  {path:'basket',loadChildren:()=>import('./basket/basket.module').then(mod=>mod.BasketModule), data: {breadcrumb:'Basket'}},
 
  {path:'checkout',loadChildren:()=>import('./checkout/checkout.module').then(mod=>mod.CheckoutModule), data: {breadcrumb:'Checkout'}},
+ 
+ {path:'account',loadChildren:()=>import('./account/account.module').then(mod=>mod.AccountModule), data: {skip:true}},
  {path:'**',redirectTo:'not-found', pathMatch:'full'}
 ];
 
